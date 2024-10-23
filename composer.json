@@ -1,0 +1,17 @@
+{
+    "name": "flenskiproject/klick-tipp",
+    "description": "Implementation of klick-tipp api php library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FlenskiProject\\KlickTipp\\": "src/"
+        }
+    }
+}
