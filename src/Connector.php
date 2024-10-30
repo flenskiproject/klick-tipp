@@ -176,7 +176,7 @@ class Connector {
      * @param mixed $listid The id of the subscription process.
      * @param mixed $email The email address of the subscriber.
      *
-     * @return A redirection url as defined in the subscription process.
+     * @return string|false A redirection url as defined in the subscription process.
      */
     public function subscription_process_redirect($listid, $email) {
         if (empty($listid) || empty($email)) {
@@ -203,7 +203,7 @@ class Connector {
     /**
      * Get all manual tags of the logged in user. Requires to be logged in.
      *
-     * @return A associative array <tag id> => <tag name>
+     * @return array|false|null A associative array <tag id> => <tag name>
      */
     public function tag_index() {
         $response = $this->_http_request('/tag');
@@ -222,7 +222,7 @@ class Connector {
      *
      * @param mixed $tagid The tag id.
      *
-     * @return An object representing the Klicktipp tag object.
+     * @return array|false|null An object representing the Klicktipp tag object.
      */
     public function tag_get($tagid) {
         if (!$tagid) {
@@ -248,7 +248,7 @@ class Connector {
      * @param string $name The name of the tag.
      * @param mixed $text (optional) An additional description of the tag.
      *
-     * @return mixed The id of the newly created tag.
+     * @return array|false|null The id of the newly created tag.
      */
     public function tag_create($name, $text = '') {
         if (empty($name)) {
@@ -281,7 +281,7 @@ class Connector {
      * @param mixed $name (optional) The new tag name. Set empty to leave it unchanged.
      * @param mixed $text (optional) The new tag description. Set empty to leave it unchanged.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function tag_update($tagid, $name = '', $text = '') {
         if (empty($tagid) || (empty($name) && empty($text))) {
@@ -313,7 +313,7 @@ class Connector {
      *
      * @param mixed $tagid The user id of the user to delete.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function tag_delete($tagid) {
         if (empty($tagid)) {
@@ -337,7 +337,7 @@ class Connector {
     /**
      * Get all contact fields of the logged in user. Requires to be logged in.
      *
-     * @return A associative array <field id> => <field name>
+     * @return array|false|null A associative array <field id> => <field name>
      */
     public function field_index() {
         $response = $this->_http_request('/field');
@@ -359,7 +359,7 @@ class Connector {
      * @param mixed $tagid (optional) The id of the manual tag the subscriber will be tagged with.
      * @param mixed $fields (optional) Additional fields of the subscriber.
      *
-     * @return An object representing the Klicktipp subscriber object.
+     * @return array|false|null An object representing the Klicktipp subscriber object.
      */
     public function subscribe($email, $listid = 0, $tagid = 0, $fields = array(), $smsnumber = '') {
         if (empty($email) && empty($smsnumber)) {
@@ -399,7 +399,7 @@ class Connector {
      *
      * @param mixed $email The email address of the subscriber.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function unsubscribe($email) {
         if (empty($email)) {
@@ -428,7 +428,7 @@ class Connector {
      * @param mixed $email The email address of the subscriber.
      * @param mixed $tagids The id (or an array) of the manual tag(s) the subscriber will be tagged with.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function tag($email, $tagids) {
         if (empty($email) || empty($tagids)) {
@@ -463,7 +463,7 @@ class Connector {
      * @param mixed $email The email address of the subscriber.
      * @param mixed $tagid The id of the manual tag that will be removed from the subscriber.
      *
-     * @return TRUE on success.
+     * @return bool on success.
      */
     public function untag($email, $tagid) {
         if (empty($email) || empty($tagid)) {
@@ -493,7 +493,7 @@ class Connector {
      * @param mixed $email A valid email address
      * @param mixed $autoresponder An id of the autoresponder
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function resend($email, $autoresponder) {
         if (empty($email) || empty($autoresponder)) {
@@ -520,7 +520,7 @@ class Connector {
     /**
      * Get all active subscribers. Requires to be logged in.
      *
-     * @return An array of subscriber ids.
+     * @return array|false|null An array of subscriber ids.
      */
     public function subscriber_index() {
         $response = $this->_http_request('/subscriber');
@@ -539,7 +539,7 @@ class Connector {
      *
      * @param mixed $subscriberid The subscriber id.
      *
-     * @return An object representing the Klicktipp subscriber.
+     * @return array|false|null An object representing the Klicktipp subscriber.
      */
     public function subscriber_get($subscriberid) {
         if (!$subscriberid) {
@@ -564,7 +564,7 @@ class Connector {
      *
      * @param mixed $email The email address of the subscriber.
      *
-     * @return The id of the subscriber. Use subscriber_get to get subscriber details.
+     * @return string|false|null The id of the subscriber. Use subscriber_get to get subscriber details.
      */
     public function subscriber_search($email) {
         if (empty($email)) {
@@ -592,7 +592,7 @@ class Connector {
      *
      * @param mixed $tagid The id of the tag.
      *
-     * @return An array with id -> subscription date of the tagged subscribers. Use subscriber_get to get subscriber details.
+     * @return array|false|null An array with id -> subscription date of the tagged subscribers. Use subscriber_get to get subscriber details.
      */
     public function subscriber_tagged($tagid) {
         if (empty($tagid)) {
@@ -622,7 +622,7 @@ class Connector {
      * @param mixed $fields (optional) The fields of the subscriber to update
      * @param mixed $newemail (optional) The new email of the subscriber to update
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function subscriber_update($subscriberid, $fields = array(), $newemail = '', $newsmsnumber = '') {
         if (empty($subscriberid)) {
@@ -657,7 +657,7 @@ class Connector {
      *
      * @param mixed $subscriberid The id of the subscriber to update.
      *
-     * @return TRUE on success.
+     * @return bool on success.
      */
     public function subscriber_delete($subscriberid) {
         if (empty($subscriberid)) {
@@ -684,7 +684,7 @@ class Connector {
      * @param mixed $email The email address of the subscriber.
      * @param mixed $fields (optional) Additional fields of the subscriber.
      *
-     * @return A redirection url as defined in the subscription process.
+     * @return array|false|null A redirection url as defined in the subscription process.
      */
     public function signin($apikey, $email, $fields = array(), $smsnumber = '') {
         if (empty($apikey) || (empty($email) && empty($smsnumber))) {
@@ -720,7 +720,7 @@ class Connector {
      * @param mixed $apikey The api key (listbuildng configuration).
      * @param mixed $email The email address of the subscriber.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function signout($apikey, $email) {
         if (empty($apikey) || empty($email)) {
@@ -750,7 +750,7 @@ class Connector {
      * @param mixed $apikey The api key (listbuildng configuration).
      * @param mixed $email The email address of the subscriber.
      *
-     * @return TRUE on success
+     * @return bool on success
      */
     public function signoff($apikey, $email) {
         if (empty($apikey) || empty($email)) {
